@@ -1,4 +1,4 @@
-package br.com.mystream.mystream.models;
+package br.com.mystream.mystream.models.dao;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
