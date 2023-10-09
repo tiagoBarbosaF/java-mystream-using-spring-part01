@@ -10,10 +10,7 @@ import br.com.mystream.mystream.service.ConvertData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -83,6 +80,21 @@ public class Main {
                                             "\n- Released: " + e.getReleased()
                                             .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                             ));
+
+                    System.out.println("\n\nAverage episodes rating for seasons: ");
+                    Map<Integer, Double> averageSeasonsForEpisodes = episodes.stream()
+                            .collect(Collectors.groupingBy(Episode::getSeason,
+                                    Collectors.averagingDouble(Episode::getRating)));
+
+                    System.out.println(averageSeasonsForEpisodes);
+
+                    DoubleSummaryStatistics statistics = episodes.stream()
+                            .filter(e -> e.getRating() > 0.0)
+                            .collect(Collectors.summarizingDouble(Episode::getRating));
+
+                    System.out.println(statistics);
+                    System.out.printf("Total episodes: %d%nAverage: %.1f%nMax rating: %.1f%nMin rating: %.1f%n",
+                            statistics.getCount(), statistics.getAverage(), statistics.getMax(), statistics.getMin());
                     break;
             }
         }
